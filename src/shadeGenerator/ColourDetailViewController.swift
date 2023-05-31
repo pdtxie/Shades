@@ -7,6 +7,7 @@
 
 import UIKit
 import Toast
+import ColourUtils
 
 class BlockView: UIView {
     var label: String = ""
@@ -14,7 +15,14 @@ class BlockView: UIView {
 }
 
 class ColourDetailViewController: UIViewController {
-    private let infos: [String] = ["RGB [0-255]", "RGB [0.0-1.0]", "HEX", "HSB [360°]", "HSB [0.0-1.0]", "HSL [360°]", "HSL [0.0-1.0]", "SwiftUI Color", "UIColor", "CGColor", "CIColor", "NSColor"]
+    private let infos: [String] = [
+        "RGB [0-255]", "RGB [0.0-1.0]",
+        "HEX",
+        "HSB [360°]", "HSB [0.0-1.0]",
+        "HSL [360°]", "HSL [0.0-1.0]",
+        "SwiftUI Color", "UIColor", "CGColor", "CIColor", "NSColor"
+    ]
+    
     
     let hex: String
     let colour: UIColor
@@ -29,7 +37,7 @@ class ColourDetailViewController: UIViewController {
     let scrollView: UIScrollView
     let stackView: UIStackView
     
-    let threshold: Bool
+    let isLight: Bool
     
     init(hex: String, colour: UIColor, baseColour: UIColor, outlineColour: UIColor, itemIdx: Int) {
         self.hex = hex
@@ -53,10 +61,10 @@ class ColourDetailViewController: UIViewController {
         colour.getRed(&r, green: &g, blue: &b, alpha: &a)
         
         (self.r, self.g, self.b, self.a) = (r, g, b, a)
-        (self.h, self.s_v, self.v) = getHSV(r: r, g: g, b: b)
-        (_, self.s_l, self.l) = getHSLfromHSV(h: h, s: s_v, v: v)
+        (self.h, self.s_v, self.v) = ColourUtils.getHSV(r: r, g: g, b: b)
+        (_, self.s_l, self.l) = ColourUtils.getHSL(h: h, s: s_v, v: v)
         
-        self.threshold = (r*0.299 + g*0.587 + b*0.114) > 150/255
+        self.isLight = ColourUtils.isLight(r: r, g: g, b: b)
         
         super.init(nibName: nil, bundle: nil)
     }
@@ -75,11 +83,11 @@ class ColourDetailViewController: UIViewController {
         
         navBar.isTranslucent = false
         navBar.barTintColor = colour
-        navBar.tintColor = self.threshold ? UIColor.black : UIColor.white
+        navBar.tintColor = self.isLight ? UIColor.black : UIColor.white
         
         let navItem = UINavigationItem(title: (itemIdx < 18 ? "Tint" : "Shade") + " \(itemIdx % 18 + 1) " + "for #\(hex.uppercased())")
-        navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : (self.threshold ? UIColor.black : UIColor.white)]
-        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : (self.threshold ? UIColor.black : UIColor.white)]
+        navBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor : (self.isLight ? UIColor.black : UIColor.white)]
+        navBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor : (self.isLight ? UIColor.black : UIColor.white)]
         
         #if !targetEnvironment(macCatalyst)
         let doneItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dismissSheet))
@@ -102,7 +110,7 @@ class ColourDetailViewController: UIViewController {
         self.view.backgroundColor = colour
         self.view.addSubview(scrollView)
         scrollView.addSubview(stackView)
-        scrollView.indicatorStyle = self.threshold ? .black : .white
+        scrollView.indicatorStyle = self.isLight ? .black : .white
         self.view.addSubview(navBar)
         
         NSLayoutConstraint.activate([
@@ -133,7 +141,7 @@ class ColourDetailViewController: UIViewController {
                     return String(format: "(%.*f, %.*f, %.*f)", 2, r, 2, g, 2, b)
                     
                 case "HEX":
-                    return "#\(getHEX(r: r, g: g, b: b))"
+                    return "#\(ColourUtils.getHex(r: r, g: g, b: b))"
                     
                 case "HSB [360°]":
                     return String(format: "(%i°, %.2f, %.2f)", Int(360*h), s_v, v)
@@ -215,7 +223,7 @@ class ColourDetailViewController: UIViewController {
         block.layer.cornerCurve = .continuous
         block.layer.cornerRadius = 6
         
-        block.backgroundColor = UIColor(white: self.threshold ? 0 : 1.0, alpha: 0.1)
+        block.backgroundColor = UIColor(white: self.isLight ? 0 : 1.0, alpha: 0.1)
         
         block.layer.shadowRadius = 4
         block.layer.shadowColor = UIColor.black.cgColor
@@ -241,7 +249,7 @@ class ColourDetailViewController: UIViewController {
         titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         infoLabel.font = UIFont.monospacedSystemFont(ofSize: 20, weight: .semibold)
         
-        if (self.threshold) {
+        if (self.isLight) {
             titleLabel.textColor = .black
             infoLabel.textColor = .black
             copyIcon.tintColor = .black

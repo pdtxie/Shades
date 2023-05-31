@@ -1,6 +1,7 @@
 import UIKit
 import Accelerate
 import Foundation
+import ColourUtils
 
 private final class InsetTextField: UITextField {
     var insets: UIEdgeInsets
@@ -82,10 +83,10 @@ final class ShadesViewController: UIViewController {
         setTitleAttributes(with: UIColor.label)
         
         
-        let initCol = getRandomPleasingColour()
+        let (h, s, b) = ColourUtils.generateRandomPleasingColour()
         var r: CGFloat=0, g: CGFloat=0, b: CGFloat=0, a: CGFloat=0
         initCol.getRed(&r, green: &g, blue: &b, alpha: &a)
-        let hex = getHEX(r: r, g: g, b: b)
+        let hex = ColourUtils.getHex(r: r, g: g, b: b)
         self.setColours(text: hex)
         self.hexString = hex
         self.colourField.text = hex
@@ -194,8 +195,8 @@ extension ShadesViewController: UITextFieldDelegate {
     }
     
     func setColours(text: String?) -> Void {
-        if let hex = text, let rgb = getRGB(hex: hex) {
-            let colours = generateShadesTwo(for: rgb, n: 18)
+        if let hex = text, let rgb = ColourUtils.getRGB(hex: hex) {
+            let colours = ColourUtils.getShadesFor(rgb: rgb, n: 18)
             
             let colour = UIColor(hex: hex)
             
@@ -205,161 +206,10 @@ extension ShadesViewController: UITextFieldDelegate {
             self.coloursCollectionView.backgroundColor = colour
             self.coloursCollectionView.reloadData()
             
-            self.outlineColour = colours[(((rgb.x*0.299 + rgb.y*0.587 + rgb.z*0.114) > 150) ? 6 : 30)]
+            self.outlineColour = colours[ColourUtils.isLight(r: rgb.x, g: rgb.y, b: rgb.z) ? 30 : 6]
             colourField.layer.borderColor = self.outlineColour?.cgColor
             
-            setTitleAttributes(with: self.outlineColour ?? UIColor.label)
+            setTitleAttributes(with: self.outlineColour ?? UIColor.red)
         }
     }
-}
-
-
-
-extension UIColor {
-    convenience init(hex: String) {
-        if let rgb = getRGB(hex: hex) {
-            self.init(red: rgb.x, green: rgb.y, blue: rgb.z, alpha: 1.0)
-        } else {
-            self.init(red: 0, green: 0, blue: 0, alpha: 1.0)
-        }
-    }
-}
-
-
-func getRGB(hex string: String) -> SIMD3<Double>? {
-    var hex = string.trimmingCharacters(in: .whitespacesAndNewlines)
-    hex = hex.replacingOccurrences(of: "#", with: "")
-    
-    var rgb: UInt64 = 0
-    guard Scanner(string: hex).scanHexInt64(&rgb) else { return nil }
-    
-    if (string.count == 6) {
-        let r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-        let g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-        let b = CGFloat(rgb & 0x0000FF) / 255.0
-        
-        return SIMD3(r, g, b)
-    } else {
-        return nil
-    }
-}
-
-func getHEX(r: CGFloat, g: CGFloat, b: CGFloat) -> String {
-    var str = ""
-    str += String(format:"%02X", (Int(r * 255)))
-    str += String(format:"%02X", (Int(g * 255)))
-    str += String(format:"%02X", (Int(b * 255)))
-
-    return str
-}
-
-//func generateColour(rgb: (CGFloat, CGFloat, CGFloat)) -> [UIColor]? {
-//    let hsl = getHSL(r: rgb.0, g: rgb.1, b: rgb.2)
-//
-//    let lStep1 = hsl.l/CGFloat(20)
-//    let lStep2 = (1.0 - hsl.l)/CGFloat(20)
-//
-//    var colours: [UIColor] = []
-//
-//    for i in stride(from: 0, to: hsl.l, by: lStep1) {
-//        colours.append(UIColor(hue: hsl.h, saturation: hsl.s, brightness: hsl.l + , alpha: 1.0))
-//    }
-//
-//    for i in stride(from: hsl.l, to: 1.0, by: lStep2) {
-//        colours.append(UIColor(hue: hsl.h, saturation: hsl.s, brightness: min(1.0, i+lStep2), alpha: 1.0))
-//        print(i+lStep2)
-//    }
-//
-//    return colours
-//}
-
-//func generateShades(for rgb: SIMD3<Double>, n: Int) -> [UIColor]? {
-//    var tints = [UIColor]()
-//    var shades = [UIColor]()
-//    
-//    let factor = 1.0/Double(n)
-//    var s = rgb
-//    var t = rgb
-//    
-//    for _ in 0..<n {
-//        t += (SIMD3(1.0, 1.0, 1.0) - t) * factor
-//        s *= (1.0 - factor)
-//        
-//        tints.append(UIColor(red: t.x, green: t.y, blue: t.z, alpha: 1.0))
-//        shades.append(UIColor(red: s.x, green: s.y, blue: s.z, alpha: 1.0))
-//        
-//        print(getHSV(r: s.x, g: s.y, b: s.z).v)
-//    }
-//    
-//    return tints.reversed() + shades
-//}
-
-func generateShadesTwo(for rgb: SIMD3<Double>, n: Int) -> [UIColor] {
-    var tints = [UIColor]()
-    var shades = [UIColor]()
-    
-    let factor = 1.0/Double(n)
-    
-    for o in stride(from: 0, to: 1.0, by: factor) {
-        let t = o + factor + (1 - o - factor) * rgb
-        let s = o * rgb
-        
-        tints.append(UIColor(red: t.x, green: t.y, blue: t.z, alpha: 1.0))
-        shades.append(UIColor(red: s.x, green: s.y, blue: s.z, alpha: 1.0))
-    }
-    
-    return (shades + tints).reversed()
-}
-
-
-func getHSV(r: CGFloat, g: CGFloat, b: CGFloat) -> (h: CGFloat, s: CGFloat, v: CGFloat) {
-    let v = max(r, g, b)
-    let c = v - min(r, g, b)
-    
-    var h: CGFloat = {
-        if (c == 0) { return 0 }
-        
-        switch (v) {
-        case r: return ((g - b)/c).truncatingRemainder(dividingBy: 6)
-        case g: return (b - r)/c + 2.0
-        case b: return (r - g)/c + 4.0
-        
-        default: return 0
-        }
-    }()
-    
-    h /= 6.0
-    
-    
-    let s: CGFloat = v == 0 ? 0 : c / v
-    
-    return (h, s, v)
-}
-
-func getHSLfromHSV(h: CGFloat, s: CGFloat, v: CGFloat) -> (h: CGFloat, s: CGFloat, l: CGFloat) {
-    var l = (2 - s) * v / 2
-    var s_l = s
-    
-    if (l != 0) {
-        if (l == 1) {
-            s_l = 0
-        } else if (l < 0.5) {
-            s_l = s * v / (l * 2)
-        } else {
-            s_l = s * v / (2 - l * 2)
-        }
-    }
-
-    return (h, s_l, l)
-}
-
-
-
-func getRandomPleasingColour() -> UIColor {
-    let base = UIColor(red: CGFloat.random(in: 0...1), green: CGFloat.random(in: 0...1), blue: CGFloat.random(in: 0...1), alpha: 1.0)
-    var (h, s, v, a): (CGFloat, CGFloat, CGFloat, CGFloat) = (0, 0, 0, 0)
-    
-    base.getHue(&h, saturation: &s, brightness: &v, alpha: &a)
-    
-    return UIColor(hue: h, saturation: s/2, brightness: (1+s)/2, alpha: a)
 }

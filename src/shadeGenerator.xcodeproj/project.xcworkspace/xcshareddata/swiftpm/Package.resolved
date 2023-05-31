@@ -1,6 +1,15 @@
 {
   "pins" : [
     {
+      "identity" : "colourutils",
+      "kind" : "localSourceControl",
+      "location" : "/Users/pdt/Documents/stuff/projects/colour-utils/ColourUtils",
+      "state" : {
+        "branch" : "main",
+        "revision" : "c92e8fadf16ab92b15b192e5fcdf71a4ed568735"
+      }
+    },
+    {
       "identity" : "toast-swift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/BastiaanJansen/toast-swift",
