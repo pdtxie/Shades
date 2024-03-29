@@ -16,7 +16,7 @@
 		236924E029C56505006B40BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 236924DF29C56505006B40BD /* Assets.xcassets */; };
 		236924E329C56505006B40BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 236924E129C56505006B40BD /* LaunchScreen.storyboard */; };
 		236924EB29C5651F006B40BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 236924EA29C5651F006B40BD /* Main.storyboard */; };
-		23F6CF9B2A2725E100EF8D1D /* ColourUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 23F6CF9A2A2725E100EF8D1D /* ColourUtils */; };
+		23CE0BF52BB66DC200A1B0FA /* ColourUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 23CE0BF42BB66DC200A1B0FA /* ColourUtils */; };
 		AFD9499029CD2701009DFD00 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AFD9498F29CD2701009DFD00 /* Accelerate.framework */; };
 /* End PBXBuildFile section */
 
@@ -42,7 +42,7 @@
 			files = (
 				2319D1EC2A270A6000AC2D23 /* Toast in Frameworks */,
 				AFD9499029CD2701009DFD00 /* Accelerate.framework in Frameworks */,
-				23F6CF9B2A2725E100EF8D1D /* ColourUtils in Frameworks */,
+				23CE0BF52BB66DC200A1B0FA /* ColourUtils in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -117,7 +117,7 @@
 			name = shadeGenerator;
 			packageProductDependencies = (
 				2319D1EB2A270A6000AC2D23 /* Toast */,
-				23F6CF9A2A2725E100EF8D1D /* ColourUtils */,
+				23CE0BF42BB66DC200A1B0FA /* ColourUtils */,
 			);
 			productName = shadeGenerator;
 			productReference = 236924D329C56504006B40BD /* shadeGenerator.app */;
@@ -150,7 +150,7 @@
 			mainGroup = 236924CA29C56504006B40BD;
 			packageReferences = (
 				2319D1EA2A270A6000AC2D23 /* XCRemoteSwiftPackageReference "toast-swift" */,
-				23F6CF992A2725E100EF8D1D /* XCRemoteSwiftPackageReference "ColourUtils" */,
+				23CE0BF32BB66DC200A1B0FA /* XCRemoteSwiftPackageReference "ColourUtils" */,
 			);
 			productRefGroup = 236924D429C56504006B40BD /* Products */;
 			projectDirPath = "";
@@ -418,9 +418,9 @@
 				minimumVersion = 1.0.0;
 			};
 		};
-		23F6CF992A2725E100EF8D1D /* XCRemoteSwiftPackageReference "ColourUtils" */ = {
+		23CE0BF32BB66DC200A1B0FA /* XCRemoteSwiftPackageReference "ColourUtils" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "file:///Users/pdt/Documents/stuff/projects/colour-utils/ColourUtils";
+			repositoryURL = "https://github.com/pdtxie/ColourUtils";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -434,9 +434,9 @@
 			package = 2319D1EA2A270A6000AC2D23 /* XCRemoteSwiftPackageReference "toast-swift" */;
 			productName = Toast;
 		};
-		23F6CF9A2A2725E100EF8D1D /* ColourUtils */ = {
+		23CE0BF42BB66DC200A1B0FA /* ColourUtils */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 23F6CF992A2725E100EF8D1D /* XCRemoteSwiftPackageReference "ColourUtils" */;
+			package = 23CE0BF32BB66DC200A1B0FA /* XCRemoteSwiftPackageReference "ColourUtils" */;
 			productName = ColourUtils;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -1,12 +1,13 @@
 {
+  "originHash" : "3b858b6adaad931d61fc52aabb5eccd2fd6b4d855b4592ea1826cd114e708e74",
   "pins" : [
     {
       "identity" : "colourutils",
-      "kind" : "localSourceControl",
-      "location" : "/Users/pdt/Documents/stuff/projects/colour-utils/ColourUtils",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/pdtxie/ColourUtils",
       "state" : {
         "branch" : "main",
-        "revision" : "c92e8fadf16ab92b15b192e5fcdf71a4ed568735"
+        "revision" : "dd75601f17b3c451ca51add40cc3fee424804a22"
       }
     },
     {
@@ -14,10 +15,10 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/BastiaanJansen/toast-swift",
       "state" : {
-        "revision" : "7e9e3fa6c85dc76ab996abb09b26f5fc14bec26b",
-        "version" : "1.3.2"
+        "revision" : "bc52aa61d6a372da553d1d59bdd4e56037ae2f14",
+        "version" : "1.5.0"
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

@@ -83,7 +83,7 @@ final class ShadesViewController: UIViewController {
         setTitleAttributes(with: UIColor.label)
         
         
-        let (h, s, b) = ColourUtils.generateRandomPleasingColour()
+        let initCol = ColourUtils.generateRandomPleasingColour()
         var r: CGFloat=0, g: CGFloat=0, b: CGFloat=0, a: CGFloat=0
         initCol.getRed(&r, green: &g, blue: &b, alpha: &a)
         let hex = ColourUtils.getHex(r: r, g: g, b: b)
