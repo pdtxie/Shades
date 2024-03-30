@@ -23,7 +23,7 @@
 /* Begin PBXFileReference section */
 		2319D1E82A27091600AC2D23 /* Quicksand.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Quicksand.ttf; sourceTree = "<group>"; };
 		232E95E029CAD16300B09916 /* ColourDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourDetailViewController.swift; sourceTree = "<group>"; };
-		236924D329C56504006B40BD /* shadeGenerator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = shadeGenerator.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		236924D329C56504006B40BD /* Shades!.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Shades!.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		236924D629C56504006B40BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		236924D829C56504006B40BD /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		236924DA29C56504006B40BD /* ShadesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadesViewController.swift; sourceTree = "<group>"; };
@@ -69,7 +69,7 @@
 		236924D429C56504006B40BD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				236924D329C56504006B40BD /* shadeGenerator.app */,
+				236924D329C56504006B40BD /* Shades!.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -120,7 +120,7 @@
 				23CE0BF42BB66DC200A1B0FA /* ColourUtils */,
 			);
 			productName = shadeGenerator;
-			productReference = 236924D329C56504006B40BD /* shadeGenerator.app */;
+			productReference = 236924D329C56504006B40BD /* Shades!.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -131,7 +131,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1420;
-				LastUpgradeCheck = 1420;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					236924D229C56504006B40BD = {
 						CreatedOnToolsVersion = 14.2;
@@ -237,6 +237,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -297,6 +298,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -341,7 +343,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pdt.shadeGenerator;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Shades!";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -378,7 +380,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pdt.shadeGenerator;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Shades!";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
