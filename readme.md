@@ -2,8 +2,8 @@
 
 <p align="center">
   <img src="https://github.com/pdtxie/shade-generator/assets/65262710/b2d69ab0-a461-406f-83dc-e2194a3b9587"
-       width="225"
-       height="225">
+       width="200"
+       height="200">
 <p align="center">
 <h4 align="center">a quick little tints & shades generator</h4>
   
