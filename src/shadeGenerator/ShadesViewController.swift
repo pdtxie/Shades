@@ -48,6 +48,7 @@ final class ShadesViewController: UIViewController {
     var baseColour: UIColor?
     var outlineColour: UIColor?
     
+    var cellWidth: CGFloat = 100
     
     var colours: [UIColor]?
     
@@ -92,6 +93,16 @@ final class ShadesViewController: UIViewController {
         self.colourField.text = hex
         self.leftView.frame = CGRect(x: 0, y: 0, width: 24, height: colourField.frame.size.height)
         colourField.addSubview(pound)
+        
+        coloursCollectionView.dataSource = self
+        coloursCollectionView.delegate = self
+        
+        let n: CGFloat = (self.view.frame.width > 500) ? 9 : 6
+        let padding: CGFloat =  2 * n
+        self.cellWidth = (self.view.frame.width - ((n - 1) * padding) - 40) / n
+        let layout = self.coloursCollectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        layout.itemSize = CGSize(width: cellWidth, height: cellWidth)
+        layout.minimumLineSpacing = padding
     }
 }
 
@@ -114,7 +125,7 @@ extension ShadesViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         cell.layer.cornerCurve = .continuous
-        cell.layer.cornerRadius = 4
+        cell.layer.cornerRadius = max(4, self.cellWidth / 16)
         
         if let colours = self.colours {
             cell.backgroundColor = colours[indexPath.item]
