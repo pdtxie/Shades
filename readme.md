@@ -20,6 +20,7 @@
 
 - written in uikit, swift
 - gives you options to copy to different colours in RGB (0-255 and 0.0-1.0), HEX, HSB, HSL, SwiftUI, UIColor, CGColor, CIColor, NSColor
+- all colour computation done through [ColourUtils package](https://github.com/pdtxie/ColourUtils)
 
 #### screenshots!
 
