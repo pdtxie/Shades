@@ -12,3 +12,5 @@
   <img src="https://github.com/pdtxie/shade-generator/assets/65262710/b12035f3-9b12-4159-b219-0b67ca2913b2" width="30%"/>
   <img src="https://github.com/pdtxie/shade-generator/assets/65262710/19a08b8f-cd5d-423b-9bba-50628efa7ce6" width="30%"/>
 </p>
+
+###### grid design inspired heavily by https://github.com/csandman/shade-generator
